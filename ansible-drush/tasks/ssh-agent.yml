@@ -1,0 +1,4 @@
+---
+- name: Run ssh-agent and add private key
+  shell: "eval $(ssh-agent); ssh-add"
+  ignore_errors: true

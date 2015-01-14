@@ -1,0 +1,19 @@
+---
+- name: Restart Apache
+  service:
+    name: apache2
+    state: restarted
+  sudo_user: root
+
+- name: Start Apache
+  service:
+    name: apache2
+    state: started
+  sudo_user: root
+
+- name: Reload Apache
+  service:
+    name: apache2
+    state: reloaded
+  sudo_user: root
+    

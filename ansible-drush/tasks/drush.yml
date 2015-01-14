@@ -1,0 +1,63 @@
+---
+- name: install drush 6 via composer
+  shell: chdir=/home/{{ drush_user }} composer --no-progress --no-interaction require drush/drush:6.*
+  register: composer_require
+  failed_when: "composer_require.rc != 0"
+  changed_when: "'Nothing to install or update' not in composer_require.stdout"
+
+- name: set drush to executable
+  file: path=/home/{{ drush_user }}/vendor/drush/drush mode=775
+
+- name: link up the drush command so everyone can run it
+  file: src=/home/{{ drush_user }}/vendor/drush/drush dest=/usr/bin/drush state=link
+  sudo: true
+
+- name: check if hacked path exists
+  stat: path=/home/{{ drush_user }}/hacked
+  register: hacked_path
+
+- name: download the hacked! module
+  shell: chdir=/home/{{ drush_user }} drush dl hacked --yes
+  when: hacked_path.exists == False
+  
+- name: check if site_audit path exists
+  stat: path=/home/{{ drush_user }}/.drush/audit
+  register: site_audit_path
+
+- name: download the site_audit module
+  shell: chdir=/home/{{ drush_user }} drush dl site_audit --yes
+  when: site_audit_path.exists == False
+
+- name: check if coder path exists
+  stat: path=/home/{{ drush_user }}/coder
+  register: coder_path
+
+- name: download the coder module
+  shell: chdir=/home/{{ drush_user }} drush dl coder --yes
+  when: coder_path.exists == False 
+
+- name: check if registry_rebuild path exists
+  stat: path=/home/{{ drush_user }}/.drush/registry_rebuild
+  register: registry_rebuild_path
+
+- name: download the registry_rebuild module
+  shell: chdir=/home/{{ drush_user }} drush dl registry_rebuild --yes
+  when: registry_rebuild_path.exists == False
+
+- name: clear drush cache
+  shell: drush cc all 
+  register: drush_cc_result
+  failed_when: "drush_cc_result.rc != 0"
+  changed_when: False
+
+- name: get latest version of Drush
+  git: repo=https://github.com/drush-ops/drush.git dest=/home/{{ drush_user }}/drush-master
+
+- name: set drush-master to executable
+  file: path=/home/{{ drush_user }}/drush-master mode=775
+
+- name: add drush-master alias to .bashrc file
+  lineinfile: dest=/home/{{ drush_user }}/.bashrc state=present line='alias drush-master=/home/{{ drush_user }}/drush-master/drush'
+
+- name: run composer install in drush-master
+  command: composer install chdir=/home/{{ drush_user }}/drush-master creates=/home/{{ drush_user }}/drush-master/vendor
