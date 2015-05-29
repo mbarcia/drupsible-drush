@@ -1,2 +1,2 @@
-# ansible-drush
-Ansible for managing Drush
+# drupsible-drush
+Drupsible role for managing Drush
