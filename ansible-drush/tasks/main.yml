@@ -1,3 +1,4 @@
 ---
 - include: drush.yml
+- include: drush-user-modules.yml
 - include: create-aliases.yml

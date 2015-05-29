@@ -24,11 +24,22 @@ $aliases['bld'] = array(
   ),
 );
 
+{% if item['source_remote_host'] is defined and item['source_remote_port'] is defined %}
 $aliases['src'] = array(
-  'remote-host' => '{{ source_remote_host }}',
-  'remote-user' => '{{ source_remote_user }}',
-  'root' => '{{ source_docroot }}',
+  'remote-host' => "{{ item['source_remote_host'] }}",
+  'remote-user' => "{{ item['source_remote_user'] }}",
+  {% if item['source_docroot'] is defined %}
+  'root' => "{{ item['source_docroot'] }}",
   'path-aliases' => array(
-    '%files' => '{{ source_docroot }}/sites/default/files',
+    '%files' => "{{ item['source_docroot'] }}/sites/default/files",
   ),
+  {% endif  %}
+  {% if item['source_proxy_credentials'] is defined %}
+{% if item['source_proxy_port'] is defined %}
+  'ssh-options' => '-o "ProxyCommand ssh -p {{ item['source_proxy_port'] }} {{ item['source_proxy_credentials'] }} nc %h %p"',
+{% else %}
+  'ssh-options' => '-o "ProxyCommand ssh {{ item['source_proxy_credentials'] }} nc %h %p"',
+{% endif  %}
+  {% endif  %}
 );
+{% endif  %}
