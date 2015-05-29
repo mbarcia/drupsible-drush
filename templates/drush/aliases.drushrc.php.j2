@@ -24,7 +24,7 @@ $aliases['bld'] = array(
   ),
 );
 
-{% if item['source_remote_host'] is defined and item['source_remote_port'] is defined %}
+{% if item['source_remote_host'] is defined %}
 $aliases['src'] = array(
   'remote-host' => "{{ item['source_remote_host'] }}",
   'remote-user' => "{{ item['source_remote_user'] }}",
@@ -48,5 +48,5 @@ $aliases['src'] = array(
   'ssh-options' => '{{ item['source_ssh_options'] }}',
     {% endif  %}
   {% endif  %}
-{% endif  %}
 );
+{% endif  %}
