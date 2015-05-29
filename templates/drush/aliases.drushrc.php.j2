@@ -26,11 +26,7 @@ $aliases['bld'] = array(
 
 {% if item['source_remote_host'] is defined and item['source_remote_port'] is defined %}
 $aliases['src'] = array(
-  {% if item['source_remote_port']|default("") != "" %}
-    'remote-host' => "{{ item['source_remote_host'] }}:{{ item['source_remote_port'] }}",
-  {% else  %}
-    'remote-host' => "{{ item['source_remote_host'] }}",
-  {% endif  %}
+  'remote-host' => "{{ item['source_remote_host'] }}",
   'remote-user' => "{{ item['source_remote_user'] }}",
   {% if item['source_docroot'] is defined %}
   'root' => "{{ item['source_docroot'] }}",
@@ -46,7 +42,10 @@ $aliases['src'] = array(
     {% endif  %}
   {% endif  %}
   {% if item['source_ssh_options'] is defined %}
+    {% if item['source_remote_port']|default("") != "" %}
+  'ssh-options' => '-p {{ item['source_remote_port']}} {{ item['source_ssh_options'] }}',
+    {% else %}
   'ssh-options' => '{{ item['source_ssh_options'] }}',
-  {% endif  %}
+    {% endif  %}
 {% endif  %}
 );
