@@ -26,7 +26,11 @@ $aliases['bld'] = array(
 
 {% if item['source_remote_host'] is defined and item['source_remote_port'] is defined %}
 $aliases['src'] = array(
-  'remote-host' => "{{ item['source_remote_host'] }}",
+  {% if item['source_remote_port']|default("") != "" %}
+    'remote-host' => "{{ item['source_remote_host'] }}:{{ item['source_remote_port'] }}",
+  {% else  %}
+    'remote-host' => "{{ item['source_remote_host'] }}",
+  {% endif  %}
   'remote-user' => "{{ item['source_remote_user'] }}",
   {% if item['source_docroot'] is defined %}
   'root' => "{{ item['source_docroot'] }}",
@@ -35,11 +39,14 @@ $aliases['src'] = array(
   ),
   {% endif  %}
   {% if item['source_proxy_credentials'] is defined %}
-{% if item['source_proxy_port'] is defined %}
+    {% if item['source_proxy_port'] is defined %}
   'ssh-options' => '-o "ProxyCommand ssh -p {{ item['source_proxy_port'] }} {{ item['source_proxy_credentials'] }} nc %h %p"',
-{% else %}
+    {% else %}
   'ssh-options' => '-o "ProxyCommand ssh {{ item['source_proxy_credentials'] }} nc %h %p"',
-{% endif  %}
+    {% endif  %}
   {% endif  %}
-);
+  {% if item['source_ssh_options'] is defined %}
+  'ssh-options' => '{{ item['source_ssh_options'] }}',
+  {% endif  %}
 {% endif  %}
+);
