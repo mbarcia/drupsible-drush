@@ -1,16 +1,14 @@
 ---
 - name: Assures .drush dir exists in each home directory
   file: 
-    path: /home/{{ item['user'] }}/.drush 
+    path: /home/{{ app['website']['user'] }}/.drush 
     state: directory
-    owner: "{{ item['user'] }}"
-    group: "{{ item['group'] }}"
-  with_items: vhost_sites
+    owner: "{{ app['website']['user'] }}"
+    group: "{{ app['website']['group'] }}"
   
 - name: Create Drush aliases (current, build and source)
   template:
     src: drush/aliases.drushrc.php.j2
-    dest: /home/{{ item['user'] }}/.drush/{{ item['host'] }}.aliases.drushrc.php
-    owner: "{{ item['user'] }}"
-    group: "{{ item['group'] }}"
-  with_items: vhost_sites
+    dest: /home/{{ item['user'] }}/.drush/{{ app['website']['host'] }}.aliases.drushrc.php
+    owner: "{{ app['website']['user'] }}"
+    group: "{{ app['website']['group'] }}"

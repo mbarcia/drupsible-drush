@@ -1,1 +1,13 @@
 ---
+drush_min_version: 6
+# webserver can be apache|nginx
+webserver: 'apache'
+webroot: '{% if (webserver == "apache") %}{{ vhost_base_path }}{% else %}{{ nginx_root_www_path }}{% endif %}'
+dependencies:
+  - role: debops.nginx
+    when: webserver == 'nginx'
+  
+  - role: drupsible.apache
+    when: webserver == 'apache'
+        
+

@@ -14,4 +14,5 @@ galaxy_info:
         - wheezy
   categories:
     - web
-dependencies: []
+dependencies:
+  - role: drupsible.composer
