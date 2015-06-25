@@ -1,10 +1,10 @@
 ---
-- name: drush | install drush via composer and run it once
+- name: Install drush via composer and run it once
   shell: /usr/local/bin/composer global require --no-progress --no-interaction drush/drush:6.* -d /usr/share/composer; /usr/share/composer/vendor/bin/drush
   args:
     creates: /usr/share/composer/vendor/bin/drush
 
-- name: drush | make drush available globally
+- name: Make drush available globally
   file:
     src: /usr/share/composer/vendor/bin/drush
     dest: /usr/bin/drush

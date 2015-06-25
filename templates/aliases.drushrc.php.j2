@@ -36,13 +36,13 @@ $aliases['src'] = array(
   {% endif  %}
   {% if app_drush_source.proxy_credentials is defined %}
     {% if app_drush_source.proxy_port is defined %}
-  'ssh-options' => '-o "ProxyCommand ssh -p {{ app_drush_source.proxy_port'] }} {{ app_drush_source.proxy_credentials'] }} nc %h %p"',
+  'ssh-options' => '-o "ProxyCommand ssh -p {{ app_drush_source.proxy_port }} {{ app_drush_source.proxy_credentials }} nc %h %p"',
     {% else %}
-  'ssh-options' => '-o "ProxyCommand ssh {{ app_drush_source.proxy_credentials'] }} nc %h %p"',
+  'ssh-options' => '-o "ProxyCommand ssh {{ app_drush_source.proxy_credentials }} nc %h %p"',
     {% endif  %}
   {% endif  %}
   {% if app_drush_source.ssh_options is defined %}
-    {% if {{ app_drush_source.remote_port | default("") }} != '' %}
+    {% if app_drush_source.remote_port|default("") != '' %}
   'ssh-options' => '-p {{ app_drush_source.remote_port }} {{app_drush_source.ssh_options }}',
     {% else %}
   'ssh-options' => '{{ app_drush_source.ssh_options }}',
