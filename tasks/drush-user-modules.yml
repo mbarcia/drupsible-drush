@@ -9,7 +9,7 @@
     creates=/home/{{ app['user'] }}/.drush/hacked
   notify: drush cc drush
 
-- name: Ddownload the Coder module
+- name: Download the Coder module
   command: drush dl coder-7.x-2.x --destination=/home/{{ app['user'] }}/.drush/coder --yes 
     creates=/home/{{ app['user'] }}/.drush/coder
   notify: drush cc drush
