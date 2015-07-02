@@ -1,21 +1,21 @@
 ---
 - name: Download the site audit module
-  command: drush dl site_audit --destination=/home/{{ app['user'] }}/.drush/site_audit --yes 
-    creates=/home/{{ app['user'] }}/.drush/site_audit
+  command: drush dl site_audit --destination=/home/{{ app_env['user'] }}/.drush/site_audit --yes 
+    creates=/home/{{ app_env['user'] }}/.drush/site_audit
   notify: drush cc drush
 
 - name: Download the hacked module
-  command: drush dl hacked --destination=/home/{{ app['user'] }}/.drush/hacked --yes 
-    creates=/home/{{ app['user'] }}/.drush/hacked
+  command: drush dl hacked --destination=/home/{{ app_env['user'] }}/.drush/hacked --yes 
+    creates=/home/{{ app_env['user'] }}/.drush/hacked
   notify: drush cc drush
 
 - name: Download the Coder module
-  command: drush dl coder-7.x-2.x --destination=/home/{{ app['user'] }}/.drush/coder --yes 
-    creates=/home/{{ app['user'] }}/.drush/coder
+  command: drush dl coder-7.x-2.x --destination=/home/{{ app_env['user'] }}/.drush/coder --yes 
+    creates=/home/{{ app_env['user'] }}/.drush/coder
   notify: drush cc drush
 
 - name: Download the Registry Rebuild module
-  command: drush dl registry_rebuild --destination=/home/{{ app['user'] }}/.drush/registry_rebuild --yes 
-    creates=/home/{{ app['user'] }}/.drush/registry_rebuild
+  command: drush dl registry_rebuild --destination=/home/{{ app_env['user'] }}/.drush/registry_rebuild --yes 
+    creates=/home/{{ app_env['user'] }}/.drush/registry_rebuild
   notify: drush cc drush
   
