@@ -9,6 +9,6 @@
 - name: Create Drush aliases (current, build and source)
   template:
     src: aliases.drushrc.php.j2
-    dest: /home/{{ app['user'] }}/.drush/{{ webhost }}.aliases.drushrc.php
+    dest: /home/{{ app['user'] }}/.drush/{{ app_name }}.aliases.drushrc.php
     owner: "{{ app['user'] }}"
     group: "{{ app['group'] }}"
