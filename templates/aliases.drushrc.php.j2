@@ -24,7 +24,7 @@ $aliases['bld'] = array(
   ),
 );
 
-{% if app_drush_source.remote_host is defined %}
+{% if app_drush_source is defined and app_drush_source.remote_host is defined %}
 $aliases['src'] = array(
   'remote-host' => "{{ app_drush_source.remote_host }}",
   'remote-user' => "{{ app_drush_source.remote_user }}",
