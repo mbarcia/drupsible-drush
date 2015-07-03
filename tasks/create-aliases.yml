@@ -5,6 +5,7 @@
     state: directory
     owner: "{{ app_env['user'] }}"
     group: "{{ app_env['group'] }}"
+  sudo: yes
   
 - name: Create Drush aliases (current, build and source)
   template:
@@ -12,3 +13,4 @@
     dest: /home/{{ app_env['user'] }}/.drush/{{ app_name }}.aliases.drushrc.php
     owner: "{{ app_env['user'] }}"
     group: "{{ app_env['group'] }}"
+  sudo: yes
