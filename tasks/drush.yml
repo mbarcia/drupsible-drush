@@ -12,3 +12,11 @@
     state: link
     force: yes
   sudo: yes
+
+- name: Enable autocomplete feature
+  file:
+    src: /usr/share/composer/vendor/bin/drush.complete.sh
+    dest: /etc/bash_completion.d/drush
+    state: link
+    force: yes
+  sudo: yes
