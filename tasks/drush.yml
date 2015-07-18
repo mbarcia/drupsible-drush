@@ -1,6 +1,6 @@
 ---
 - name: Install drush via composer and run it once
-  shell: /usr/local/bin/composer global require --no-progress --no-interaction drush/drush:{{ drush_min_version }} -d /usr/share/composer; /usr/share/composer/vendor/bin/drush
+  shell: /usr/local/bin/composer global require --no-progress --no-interaction drush/drush:{{ drush_min_version }}.* -d /usr/share/composer; /usr/share/composer/vendor/bin/drush
   args:
     creates: /usr/share/composer/vendor/bin/drush
   sudo: yes
