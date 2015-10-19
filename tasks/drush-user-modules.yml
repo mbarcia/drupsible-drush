@@ -1,4 +1,12 @@
 ---
+- name: Assures .drush dir exists in each home directory
+  file: 
+    path: /home/{{ app_env['user'] }}/.drush 
+    state: directory
+    owner: "{{ app_env['user'] }}"
+    group: "{{ app_env['group'] }}"
+  sudo: yes
+
 - name: Download the site audit module
   command: drush dl site_audit --destination=/home/{{ app_env['user'] }}/.drush/site_audit --yes 
     creates=/home/{{ app_env['user'] }}/.drush/site_audit

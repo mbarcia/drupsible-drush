@@ -1,12 +1,4 @@
 ---
-- name: Assures .drush dir exists in each home directory
-  file: 
-    path: /home/{{ app_env['user'] }}/.drush 
-    state: directory
-    owner: "{{ app_env['user'] }}"
-    group: "{{ app_env['group'] }}"
-  sudo: yes
-  
 - name: Create Drush aliases (current, build and source)
   template:
     src: aliases.drushrc.php.j2
