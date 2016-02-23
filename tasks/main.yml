@@ -2,3 +2,11 @@
 - include: drush.yml
 - include: drush-user-modules.yml
 - include: create-aliases.yml
+
+- name: Set drush dl destination
+  template:
+    src: drushrc.php.j2
+    dest: /home/{{ app_env['user'] }}/.drush/drushrc.php
+    owner: "{{ app_env['user'] }}"
+    group: "{{ app_env['group'] }}"
+  sudo: yes
