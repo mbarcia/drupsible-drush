@@ -14,5 +14,3 @@ galaxy_info:
         - jessie
   categories:
     - web
-dependencies:
-  - role: drupsible.composer

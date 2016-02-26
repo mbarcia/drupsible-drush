@@ -3,7 +3,7 @@
   shell: /usr/local/bin/composer global require --no-progress --no-interaction drush/drush:{{ drush_min_version }} -d /usr/share/composer; /usr/share/composer/vendor/bin/drush
   args:
     creates: /usr/share/composer/vendor/bin/drush
-  sudo: yes
+  become: yes
 
 - name: Make drush available globally
   file:
@@ -11,7 +11,7 @@
     dest: /usr/bin/drush
     state: link
     force: yes
-  sudo: yes
+  become: yes
 
 - name: Enable drush autocomplete feature system-wide
   file:
@@ -19,7 +19,7 @@
     dest: /etc/bash_completion.d/drush
     state: link
     force: yes
-  sudo: yes
+  become: yes
 
 - name: Enable drush autocomplete feature for the current session
   shell: "source /etc/bash_completion.d/drush"
