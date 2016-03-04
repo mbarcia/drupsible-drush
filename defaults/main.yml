@@ -3,10 +3,4 @@ drush_min_version: 7.*
 
 # webserver can be apache|nginx
 webserver: 'apache'
-webroot: "{% if (webserver == 'apache') %}{{ vhost_base_path|default('/var/www') }}{% else %}{{ nginx_root_www_path }}{% endif %}"
-dependencies:
-  - role: debops.nginx
-    when: webserver == 'nginx'
-  
-  - role: drupsible.apache
-    when: webserver == 'apache'
+webroot: "{% if (webserver == 'apache') %}{{ vhost_base_path|default('/var/www') }}{% else %}{{ nginx_www|default('/srv/www') }}{% endif %}"
