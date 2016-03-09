@@ -9,4 +9,3 @@
     dest: /home/{{ app_env['user'] }}/.drush/drushrc.php
     owner: "{{ app_env['user'] }}"
     group: "{{ app_env['group'] }}"
-  become: yes
