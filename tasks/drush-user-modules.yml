@@ -6,9 +6,16 @@
     owner: "{{ app_env['user'] }}"
     group: "{{ app_env['group'] }}"
 
-- name: Download the site_audit, hacked, coder, registry_rebuild and drush_language modules
+- name: Download optional modules modules
   command: drush dl "{{ item }}" --destination=/home/"{{ app_env['user'] }}"/.drush/"{{ item }}" --yes 
     creates=/home/"{{ app_env['user'] }}"/.drush/"{{ item }}"
   with_items: "{{ drush_optional_modules|default([]) + ['registry_rebuild'] }}"
   notify: drush cc drush
+  become: "{{ app_env['user'] }}"
+
+- name: Download the registry_rebuild module if D7
+  command: drush dl registry_rebuild --destination=/home/"{{ app_env['user'] }}"/.drush/registry_rebuild --yes 
+    creates=/home/"{{ app_env['user'] }}"/.drush/registry_rebuild
+  notify: drush cc drush
+  when: drupal_version|default('8') == '7'
   become: "{{ app_env['user'] }}"
