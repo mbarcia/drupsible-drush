@@ -9,11 +9,6 @@
 - name: Download the site_audit, hacked, coder, registry_rebuild and drush_language modules
   command: drush dl "{{ item }}" --destination=/home/"{{ app_env['user'] }}"/.drush/"{{ item }}" --yes 
     creates=/home/"{{ app_env['user'] }}"/.drush/"{{ item }}"
-  with_items:
-  - site_audit
-  - hacked
-  - coder
-  - registry_rebuild
-  - drush_language
+  with_items: "{{ drush_optional_modules|default([]) + ['registry_rebuild'] }}"
   notify: drush cc drush
   become: "{{ app_env['user'] }}"

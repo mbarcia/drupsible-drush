@@ -1,2 +1,3 @@
 ---
 drush_min_version: 8.*
+drush_optional_modules: [ 'site_audit', 'hacked', 'coder' ] 
