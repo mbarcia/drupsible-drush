@@ -9,7 +9,7 @@
 - name: Download optional modules modules
   command: drush dl "{{ item }}" --destination=/home/"{{ app_env['user'] }}"/.drush/"{{ item }}" --yes 
     creates=/home/"{{ app_env['user'] }}"/.drush/"{{ item }}"
-  with_items: "{{ drush_optional_modules|default([]) + ['registry_rebuild'] }}"
+  with_items: "{{ drush_optional_modules|default([]) }}"
   notify: drush cc drush
   become: "{{ app_env['user'] }}"
 
