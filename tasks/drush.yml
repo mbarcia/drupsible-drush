@@ -1,25 +1,35 @@
 ---
-- name: Install drush via composer and run it once
-  shell: /usr/local/bin/composer global require --no-progress --no-interaction drush/drush:{{ drush_min_version }} -d /usr/share/composer; /usr/share/composer/vendor/bin/drush
-  args:
-    creates: /usr/share/composer/vendor/bin/drush
+- name: Install drush
+  composer:
+    arguments: "drush/drush:^{{ drush_min_version }}"
+    command: require
+    working_dir: /usr/share/composer
+  notify: drush cc drush
+
+- name: Install drush/config-extra
+  composer:
+    arguments: "drush/config-extra"
+    command: require
+    working_dir: /usr/share/composer
+  when: drupal_version|version_compare('8', '==')
+  notify: drush cc drush
 
 - name: Make drush available globally
   file:
     src: /usr/share/composer/vendor/bin/drush
     dest: /usr/bin/drush
     state: link
-    force: yes
+    force: no
 
 - name: Enable drush autocomplete feature system-wide
   file:
     src: /usr/share/composer/vendor/bin/drush.complete.sh
     dest: /etc/bash_completion.d/drush
     state: link
-    force: yes
+    force: no
 
 - name: Enable drush autocomplete feature for the current session
   shell: "source /etc/bash_completion.d/drush"
   args:
     executable: /bin/bash
-
+  changed_when: false
