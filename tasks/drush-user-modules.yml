@@ -1,21 +1,23 @@
 ---
 - name: Assures .drush dir exists in each home directory
   file: 
-    path: /home/{{ app_env['user'] }}/.drush 
+    path: "/home/{{ app_env['user'] }}/.drush" 
     state: directory
     owner: "{{ app_env['user'] }}"
     group: "{{ app_env['group'] }}"
 
 - name: Download optional modules
-  command: drush dl "{{ item }}" --destination=/home/"{{ app_env['user'] }}"/.drush/ --yes 
-    creates=/home/"{{ app_env['user'] }}"/.drush/"{{ item }}"
+  command: "drush dl {{ item }} --destination=/home/{{ app_env['user'] }}/.drush/ --yes" 
+  args: 
+    creates: "/home/{{ app_env['user'] }}/.drush/{{ item }}"
   with_items: "{{ drush_optional_modules|default([]) }}"
   notify: drush cc drush
   become: "{{ app_env['user'] }}"
 
 - name: Download registry_rebuild module (D7)
-  command: drush dl registry_rebuild --destination=/home/"{{ app_env['user'] }}"/.drush/ --yes 
-    creates=/home/"{{ app_env['user'] }}"/.drush/registry_rebuild
+  command: "drush dl registry_rebuild --destination=/home/{{ app_env['user'] }}/.drush/ --yes" 
+  args:
+    creates: "/home/{{ app_env['user'] }}/.drush/registry_rebuild"
   notify: drush cc drush
-  when: drupal_version|default('8') == '7'
+  when: drupal_version|version_compare('7', '==')
   become: "{{ app_env['user'] }}"
