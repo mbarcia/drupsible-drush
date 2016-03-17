@@ -7,7 +7,7 @@
     group: "{{ app_env['group'] }}"
 
 - name: Download optional modules
-  command: "drush dl {{ item }} --default-major={{ drupal_version.split('.', 0) }} --destination=/home/{{ app_env['user'] }}/.drush/ --yes" 
+  command: "drush dl {{ item }} --default-major={{ drupal_version.split('.', 0)|join('') }} --destination=/home/{{ app_env['user'] }}/.drush/ --yes" 
   args: 
     creates: "/home/{{ app_env['user'] }}/.drush/{{ item }}"
   with_items: "{{ drush_optional_modules|default([]) }}"
@@ -15,7 +15,7 @@
   become: "{{ app_env['user'] }}"
 
 - name: Download registry_rebuild module (D7)
-  command: "drush dl registry_rebuild --default-major={{ drupal_version.split('.', 0) }} --destination=/home/{{ app_env['user'] }}/.drush/ --yes" 
+  command: "drush dl registry_rebuild --default-major={{ drupal_version.split('.', 0)|join('') }} --destination=/home/{{ app_env['user'] }}/.drush/ --yes" 
   args:
     creates: "/home/{{ app_env['user'] }}/.drush/registry_rebuild"
   notify: drush cc drush
