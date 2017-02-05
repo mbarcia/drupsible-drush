@@ -14,11 +14,26 @@ Role Variables
 
 The variables that can be passed to this role and a brief description about them are as follows
 
+    # Drupal major version (currently, 7 or 8)
+	drush_drupal_version: '8'
+	
     # Drush minimum version
-    drush_min_version: "8.1.0"
+    drush_min_version: "8.1.9"
 
     # Contributed modules destination
-    drush_contrib_modules_destination: 'sites/all/modules'
+    drush_contrib_modules_destination: 'modules' if drush_drupal_version == '8'
+    drush_contrib_modules_destination: 'sites/all/modules' if drush_drupal_version == '7'
+
+    # Your application user
+	drush_app_user: 'myapp'
+
+    # Your application user group
+	drush_app_group: 'www-data'
+
+    # Your application user home dir
+	drush_app_user_home: '/home/myapp' if drush_app_user != root
+	drush_app_user_home: '/root' if drush_app_user == root
+
 
 Example Playbook
 ----------------
@@ -30,6 +45,7 @@ Example Playbook
   become: yes
   tags: [ 'role::composer' ]
 - role: drupsible.drush
+  drush_app_user: 'myapp'
   become: yes
   tags: [ 'role::drush' ]
 ```

@@ -11,7 +11,7 @@
     arguments: "drush/config-extra"
     command: require
     working_dir: /usr/share/composer
-  when: app_drupal_version|version_compare('8', '==')
+  when: drush_drupal_version|version_compare('8', '==')
   notify: drush cc drush
 
 - name: Make drush available globally

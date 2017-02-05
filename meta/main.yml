@@ -8,6 +8,7 @@ galaxy_info:
       versions:
         - trusty
         - vivid
+        - xenial
     - name: Debian
       versions:
         - wheezy
