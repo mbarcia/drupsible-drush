@@ -1,6 +1,7 @@
 ---
 drush_drupal_version: '8'
 drush_min_version: "8.1.9"
+drush_app_group: 'www-data'
 drush_contrib_modules_destination_default_d7: 'sites/all/modules'
 drush_contrib_modules_destination_default_d8: 'modules'
 drush_contrib_modules_destination: "{{ drush_drupal_version|version_compare('8', '==') | ternary(drush_contrib_modules_destination_default_d8, drush_contrib_modules_destination_default_d7) }}"
