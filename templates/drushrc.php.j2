@@ -3,3 +3,5 @@
 // {{ ansible_managed }}
 
 $options['destination'] = '{{ drush_contrib_modules_destination }}';
+
+ini_set('memory_limit', '-1');
