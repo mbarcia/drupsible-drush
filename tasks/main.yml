@@ -1,11 +1,12 @@
 ---
+- include: drush.yml
+  tags: [ provision ]
+
 - set_fact:
     drush_app_user_home_default: “{{ (drush_app_user|default('root') == 'root') | ternary('/root', '/home/' + drush_app_user) }}”
 
 - set_fact:
     drush_app_user_home: “{{ (drush_app_user_home|default('') == '') | ternary(drush_app_user_home_default, drush_app_user_home) }}”
-
-- include: drush.yml
 
 - include: drush-user-modules.yml
 
